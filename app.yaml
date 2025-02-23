@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python-app
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      containers:
+        - name: python-app
+          image: daniil3680/test_task:latest
+          envFrom:
+            - configMapRef:
+                name: python-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: python-config
+data:
+  ENV_VAR_1: "Привет, мир!"
+  ENV_VAR_2: "Это значение из ConfigMap"
